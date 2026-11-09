@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>causal-envs</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230b0c0e'/%3E%3Cpath d='M12 26 L22 23 L30 27 L36 25' fill='none' stroke='%23eef0f2' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M36 25 L42 42 L52 44' fill='none' stroke='%23eef0f2' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M40 25 L54 25' fill='none' stroke='%237db4ff' stroke-width='5' stroke-linecap='round' stroke-dasharray='3 7'/%3E%3C/svg%3E">
 <meta name="description" content="RL environments for data-analysis agents. Simulated companies, known truth, rule-based grading.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,7 +102,7 @@
   .sub { font-size: clamp(18px, 2vw, 22px); color: var(--muted); max-width: 640px; line-height: 1.5; margin: 0; font-weight: 400; }
 
   .viz-hero { margin-top: 56px; position: relative; }
-  #ascii { width: 100%; height: 360px; display: block; }
+  #ascii { width: 100%; height: 380px; display: block; }
   .legend { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 14px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
   .legend b { font-weight: 400; color: var(--fg); }
   .sw { display: inline-block; width: 18px; height: 0; border-top: 2px solid var(--fg); vertical-align: middle; margin-right: 8px; }
@@ -153,7 +154,7 @@
   .gate span:last-child { font-family: var(--mono); font-size: 12px; color: var(--muted); text-align: right; }
 
   /* timeline */
-  .timeline { display: grid; grid-template-columns: repeat(3, 1fr); position: relative; }
+  .timeline { display: grid; grid-template-columns: repeat(4, 1fr); position: relative; }
   .timeline::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 1px; background: var(--rule); }
   .tl { padding-right: 28px; position: relative; }
   .tl .dot { width: 15px; height: 15px; border-radius: 50%; border: 1px solid var(--faint); background: var(--bg); position: relative; }
@@ -207,6 +208,35 @@
     .pill i { animation: none; }
     .fill { transition: none; }
   }
+
+  :root { --warn: #b7791f; }
+  :root[data-theme="dark"] { --warn: #f6c35b; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --warn: #f6c35b; } }
+  .viz-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px 28px; flex-wrap: wrap; font-family: var(--mono); font-size: 13px; color: var(--fg); margin-bottom: 14px; min-height: 64px; }
+  .vh-left { display: flex; flex-direction: column; gap: 10px; }
+  .tagm { color: var(--muted); font-size: 11px; border: 1px solid var(--rule); border-radius: 999px; padding: 2px 8px; margin-right: 10px; }
+  .fade { opacity: 0; transition: opacity .6s ease; }
+  .fade.on { opacity: 1; }
+  .verdict { text-align: right; font-family: var(--mono); }
+  .verdict b { display: inline-block; font-weight: 500; font-size: 13px; color: var(--vc, var(--accent)); border: 1.5px solid var(--vc, var(--accent)); border-radius: 999px; padding: 5px 14px; letter-spacing: .02em; background: var(--bg); }
+  .verdict span { display: block; margin-top: 8px; font-size: 11.5px; color: var(--muted); }
+  .verdict .wait { margin-top: 6px; font-size: 12px; color: var(--muted); display: inline-flex; align-items: center; gap: 8px; }
+  .spin { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--faint); border-top-color: var(--accent); display: inline-block; animation: rot 1s linear infinite; }
+  @keyframes rot { to { transform: rotate(360deg); } }
+  .termbox { margin-top: 18px; border: 1px solid var(--rule); border-radius: 22px; overflow: hidden; background: var(--card); }
+  .termbar { display: flex; align-items: center; gap: 7px; padding: 12px 18px; border-bottom: 1px solid var(--rule); }
+  .termbar i { width: 10px; height: 10px; border-radius: 50%; background: var(--rule); }
+  .termbar span { margin-left: 10px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .term { font-family: var(--mono); font-size: 12.5px; line-height: 1.75; padding: 18px 22px 22px; min-height: 330px; white-space: pre-wrap; word-break: break-word; }
+  .tl-c { color: var(--muted); }
+  .tl-p { color: var(--fg); }
+  .tl-o { color: var(--muted); }
+  .tl-a { color: var(--accent); margin-top: 8px; }
+  .tl-g { color: var(--accent); }
+  .pr { color: var(--accent); }
+  .caret { display: inline-block; width: 7px; height: 14px; background: var(--accent); vertical-align: -2px; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (max-width: 620px) { .verdict { text-align: left; } .viz-head { min-height: 120px; } .term { font-size: 11px; min-height: 380px; } }
 </style>
 <script>
   (function () {
@@ -239,8 +269,15 @@
   <div class="wrap">
     <div class="pill"><i></i>In development · January 2027</div>
     <h1>The metric moved.<br><em>Was it really the launch?</em></h1>
-    <p class="sub">RL environments that train data-analysis agents to check the story, not repeat it.</p>
+    <p class="sub">RL environments where agents must check the story behind the numbers, and the truth is known.</p>
     <div class="viz-hero">
+      <div class="viz-head">
+        <div class="vh-left">
+          <div><span class="tagm">memo</span><span id="memo" class="fade"></span></div>
+          <div class="vh-metric"><span class="tagm">metric</span><span id="metricname" class="fade"></span></div>
+        </div>
+        <div id="verdict" class="verdict fade"></div>
+      </div>
       <canvas id="ascii" aria-label="A KPI line that drops after an event, compared with the counterfactual world without it"></canvas>
       <div class="legend">
         <div><span class="sw"></span><b>observed</b></div>
@@ -254,7 +291,7 @@
 <section id="task">
   <div class="wrap">
     <div class="label reveal"><span>01</span>Task</div>
-    <h2 class="reveal">A simulated company. A claim to check.</h2>
+    <h2 class="reveal">A simulated world. A claim to check.</h2>
     <div class="flow">
       <div class="step reveal">
         <div class="n">01</div>
@@ -278,6 +315,10 @@
         <h3>Graded</h3>
         <p>Against the simulated truth and the query log.</p>
       </div>
+    </div>
+    <div class="termbox reveal" id="termbox">
+      <div class="termbar"><i></i><i></i><i></i><span>one investigation · illustrative</span></div>
+      <div class="term" id="term"></div>
     </div>
   </div>
 </section>
@@ -337,6 +378,7 @@
       <div class="tl now"><div class="dot"></div><div class="m">NOV 2026</div><p>Grader, simulator and gates built. First gated bank.</p></div>
       <div class="tl"><div class="dot"></div><div class="m">DEC 2026</div><p>Frontier pass rates per level. Training-transfer test.</p></div>
       <div class="tl"><div class="dot"></div><div class="m">JAN 2027</div><p>First tasks available.</p></div>
+      <div class="tl"><div class="dot"></div><div class="m">2027 →</div><p>Further task families on the same engine and gates.</p></div>
     </div>
   </div>
 </section>
@@ -373,88 +415,346 @@
     var next = isDark() ? "light" : "dark";
     root.setAttribute("data-theme", next);
     try { localStorage.setItem("ce-theme", next); } catch (e) {}
-    drawTwin();
+    drawTwin(); heroTheme();
   });
 
-  /* ---------- hero: ASCII field ---------- */
+  /* ---------- hero: live monitor ---------- */
   var cv = document.getElementById("ascii");
   var ctx = cv.getContext("2d");
-  var W, H, cols, rows, cw = 9, ch = 14, dpr = 1;
-  var ramp = " .·:-=+";
-
+  var W = 0, H = 0, cols = 0, rows = 0, cw = 9, ch = 14, fpx = 12, dpr = 1, rate = 8, mobile = false;
+  var RAMP = " .·:-=+", FIELD = "·:;¦?", SPIN = "|/-\\";
+  var TRAVEL = 14, T = 11, FPS_MS = 33;
   function seeded(i) { var x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); }
-  var N = 400, base = [];
-  for (var i = 0; i < N; i++) {
-    var t = i / N;
-    var season = Math.sin(t * Math.PI * 7) * 0.035 + Math.sin(t * Math.PI * 17) * 0.006;
-    base.push(0.64 + season + (seeded(i) - 0.5) * 0.006);
+
+  var SC = [
+    { metric: "checkout conversion", event: "app release", short: "release",
+      claim: "“Conversion fell because of the app release.”",
+      verdict: "Supported", detail: "the release explains the drop", tone: "--accent",
+      eff: ["step", -0.17], com: ["none", 0], noise: 0.004, gap: "+" },
+    { metric: "weekly revenue", event: "price change", short: "price",
+      claim: "“Revenue fell because of the price change.”",
+      verdict: "Refuted", detail: "effect ≈ 0 · a paid-traffic mix shift explains it", tone: "--neg",
+      eff: ["none", 0], com: ["ramp", -0.16], noise: 0.004, gap: "" },
+    { metric: "new signups", event: "campaign end", short: "campaign",
+      claim: "“Signups fell because the campaign ended.”",
+      verdict: "Supported in part", detail: "about 45% of the drop", tone: "--accent",
+      eff: ["step", -0.08], com: ["ramp", -0.10], noise: 0.004, gap: "+" },
+    { metric: "30-day retention", event: "onboarding test", short: "test",
+      claim: "“The new onboarding lifted retention.”",
+      verdict: "Insufficient evidence", detail: "test stopped early · interval includes zero", tone: "--warn",
+      eff: ["none", 0], com: ["wobble", 0.03], noise: 0.03, gap: "?" },
+    { metric: "weekly active users", event: "tracking fix", short: "tracking",
+      claim: "“Active users grew after the new feature.”",
+      verdict: "Refuted", detail: "a tracking change, not real growth", tone: "--neg",
+      eff: ["none", 0], com: ["step", 0.15], noise: 0.004, gap: "" }
+  ];
+
+  function shape(kind, A, u) {
+    if (kind === "step") return A * Math.min(1, u / 0.6);
+    if (kind === "ramp") return A * Math.min(1, u / 5);
+    if (kind === "wobble") return A * Math.sin(u * 2.1) * Math.min(1, u / 1.5);
+    return 0;
   }
-  var EV = 0.58, DEC = 0.30;
-  function cf(t) { return base[Math.min(N - 1, Math.floor(t * N))]; }
-  function obs(t) {
-    var b = cf(t);
-    if (t < EV) return b;
-    var k = Math.min(1, (t - EV) / 0.06);
-    return b - 0.19 * k;
+  function win(u) {                      // effect is on after the event, then recovers before the next episode
+    if (u < 0 || u > 9.6) return 0;
+    if (u < 6.8) return 1;
+    var p = (u - 6.8) / 2.8; return 1 - p * p * (3 - 2 * p);
+  }
+  function baseline(s) {
+    return 0.62 + Math.sin(s * 0.55) * 0.03 + Math.sin(s * 1.7 + 1) * 0.012 + (seeded(Math.floor(s * rate)) - 0.5) * 0.005;
+  }
+  function worldRaw(s) {
+    var ob = baseline(s), cf = ob, k0 = Math.floor(s / T);
+    for (var k = k0 - 1; k <= k0; k++) {
+      if (k < 0) continue;
+      var sc = SC[k % SC.length], u = s - k * T, w = win(u);
+      if (w <= 0) continue;
+      var c = shape(sc.com[0], sc.com[1], u) * w, e = shape(sc.eff[0], sc.eff[1], u) * w;
+      if (sc.noise > 0.01) { var q = s * 2.2, qi = Math.floor(q), qf = q - qi; qf = qf * qf * (3 - 2 * qf); c += ((seeded(qi + 777) * (1 - qf) + seeded(qi + 778) * qf) - 0.5) * sc.noise * 2 * w; }
+      cf += c; ob += c + e;
+    }
+    return { ob: ob, cf: cf };
+  }
+  function world(s) {                    // lightly smoothed so the line does not jitter between rows
+    var d = 0.6 / rate, a = worldRaw(s - d), b = worldRaw(s), c = worldRaw(s + d);
+    return { ob: (a.ob + 2 * b.ob + c.ob) / 4, cf: (a.cf + 2 * b.cf + c.cf) / 4 };
+  }
+  function baseS(s) { var d = 0.6 / rate; return (baseline(s - d) + 2 * baseline(s) + baseline(s + d)) / 4; }
+
+  // per episode: the competing stories and when the query probes land
+  var EP = {};
+  function plan(k) {
+    if (EP[k]) return EP[k];
+    var sc = SC[k % SC.length], ek = k * T;
+    var pre = world(ek - 0.15).ob, b0 = baseS(ek - 0.15), w3 = world(ek + 3.0);
+    var B3 = baseS(ek + 3.0) + (pre - b0);
+    var aTrue = Math.abs(w3.cf - w3.ob) < 0.012, bTrue = Math.abs(w3.cf - B3) < 0.012;
+    var stories = [{ tru: aTrue }, { tru: bTrue }];
+    if (!aTrue && !bTrue) stories.push({ tru: true });
+    var wrong = stories.filter(function (x) { return !x.tru; });
+    wrong.forEach(function (x, i) { x.die = 2.7 + i * 1.0; });
+    var probes = [];
+    for (var i = 0; i < 5; i++) { var fire = 1.4 + i * 0.72; probes.push({ fire: fire, at: 0.3 + seeded(k * 17 + i * 3) * (fire - 0.7) }); }
+    EP[k] = { pre: pre, b0: b0, stories: stories, probes: probes, unsure: sc.gap === "?" };
+    return EP[k];
+  }
+  function phaseOf(u) { return u < 1.2 ? "detect" : (u < 5.0 ? "invest" : "verdict"); }
+
+  // palette: read once, mixed from gray to each verdict colour in 6 steps
+  var pal = null;
+  function hex(c) {
+    c = c.trim();
+    if (c[0] === "#") { if (c.length === 4) c = "#" + c[1] + c[1] + c[2] + c[2] + c[3] + c[3]; return [parseInt(c.substr(1, 2), 16), parseInt(c.substr(3, 2), 16), parseInt(c.substr(5, 2), 16)]; }
+    var m = c.match(/\d+/g); return m ? [+m[0], +m[1], +m[2]] : [128, 128, 128];
+  }
+  function getPal() {
+    if (pal) return pal;
+    pal = { fg: css("--fg"), faint: css("--faint"), muted: css("--muted"), bg: css("--bg"), mix: {} };
+    var g = hex(pal.muted);
+    ["--accent", "--neg", "--warn"].forEach(function (key) {
+      var t = hex(css(key)), arr = [];
+      for (var i = 0; i <= 5; i++) { var f = i / 5; arr.push("rgb(" + Math.round(g[0] + (t[0] - g[0]) * f) + "," + Math.round(g[1] + (t[1] - g[1]) * f) + "," + Math.round(g[2] + (t[2] - g[2]) * f) + ")"); }
+      pal.mix[key] = arr;
+    });
+    return pal;
+  }
+  function heroTheme() { pal = null; if (reduce || !running) drawOnce(); }
+
+  var memoEl = document.getElementById("memo"), vEl = document.getElementById("verdict"), metricEl = document.getElementById("metricname");
+  var lastK = -1, lastPhase = "", switchTimer = null;
+  function setEpisode(k) {
+    var sc = SC[k % SC.length];
+    memoEl.textContent = sc.claim; metricEl.textContent = sc.metric;
+    vEl.style.setProperty("--vc", "var(" + sc.tone + ")");
+  }
+  function setPhase(k, phase) {
+    var sc = SC[k % SC.length];
+    if (phase === "detect") vEl.innerHTML = '<span class="wait">event detected · memo received</span>';
+    else if (phase === "invest") vEl.innerHTML = '<span class="wait"><i class="spin"></i>establishing ground truth</span>';
+    else vEl.innerHTML = "<b>" + sc.verdict + "</b><span>" + sc.detail + "</span>";
+  }
+  function syncText(k, u) {
+    var phase = phaseOf(u);
+    if (k !== lastK) {
+      lastK = k; lastPhase = phase;
+      [memoEl, metricEl, vEl].forEach(function (e) { e.classList.remove("on"); });
+      clearTimeout(switchTimer);
+      switchTimer = setTimeout(function () {
+        setEpisode(lastK); setPhase(lastK, lastPhase);
+        [memoEl, metricEl, vEl].forEach(function (e) { e.classList.add("on"); });
+      }, reduce ? 0 : 450);
+    } else if (phase !== lastPhase) { lastPhase = phase; setPhase(k, phase); }
   }
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     var r = cv.getBoundingClientRect();
     W = r.width; H = r.height;
-    cv.width = W * dpr; cv.height = H * dpr;
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cw = W < 620 ? 7 : 9; ch = W < 620 ? 11 : 14;
+    mobile = W < 620;
+    cw = mobile ? 7 : 9; ch = mobile ? 11 : 14; fpx = mobile ? 10 : 12;
+    TRAVEL = mobile ? 16 : 14;
     cols = Math.floor(W / cw); rows = Math.floor(H / ch);
+    rate = cols / TRAVEL; EP = {};
   }
 
-  var start = performance.now();
-  function frame(now) {
-    var time = (now - start) / 1000;
-    var fg = css("--fg"), faint = css("--faint"), acc = css("--accent"), muted = css("--muted");
-    ctx.clearRect(0, 0, W, H);
-    ctx.font = (W < 620 ? 10 : 12) + "px " + css("--mono").split(",")[0].replace(/"/g, "") + ", monospace";
-    ctx.textBaseline = "top";
-    var reveal = reduce ? 1 : Math.min(1, time / 2.4);
-    var revealCol = Math.floor(cols * reveal);
-    var evCol = Math.floor(EV * cols);
+  // per-column scratch arrays (no allocation per frame)
+  var cRo = [], cRc = [], cRb = [], cKe = [], cUe = [];
 
-    function rowOf(v) { return (1 - (v - 0.34) / (0.78 - 0.34)) * (rows - 3) + 2; }
-    var prevO = null;
+  function draw(clock) {
+    var P0 = getPal();
+    var k = Math.floor(clock / T), u = clock - k * T, phase = phaseOf(u);
+    syncText(k, u);
+    ctx.clearRect(0, 0, W, H);
+    ctx.font = fpx + 'px "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace';
+    ctx.textBaseline = "top";
+    var top = 3, span = rows - 4;
+    function rowOf(v) { return Math.round((1 - (v - 0.30) / 0.56) * span + top); }
+
+    // pass 1: per-column values
     for (var c = 0; c < cols; c++) {
-      if (c > revealCol) break;
-      var t = c / cols;
-      var yo = rowOf(obs(t)), yc = rowOf(cf(t));
-      var ro = Math.round(yo), rc = Math.round(yc);
-      var lo = prevO === null ? ro : Math.min(prevO, ro), hi = prevO === null ? ro : Math.max(prevO, ro);
-      prevO = ro;
-      for (var r = 0; r < rows; r++) {
-        var x = c * cw, y = r * ch;
+      var s = clock - (1 - c / cols) * TRAVEL, wv = world(s);
+      cRo[c] = rowOf(wv.ob); cRc[c] = rowOf(wv.cf);
+      var ke = Math.floor(s / T); cKe[c] = ke; cUe[c] = s - ke * T;
+      if (ke >= 0 && win(cUe[c]) > 0) { var P = plan(ke); cRb[c] = rowOf(baseS(s) + (P.pre - P.b0) * win(cUe[c]) + (wv.ob - baseS(s) - (P.pre - P.b0)) * (1 - win(cUe[c]))); }
+      else cRb[c] = cRo[c];
+    }
+
+    // pass 2: cells
+    var step = Math.floor(clock * 8);
+    for (c = 0; c < cols; c++) {
+      var ro = cRo[c], rc = cRc[c], rb = cRb[c], ke = cKe[c], ue = cUe[c];
+      var prev = c > 0 ? cRo[c - 1] : ro, cLo = Math.min(prev, ro), cHi = Math.max(prev, ro);
+      var active = ke >= 0 && ue >= 0 && win(ue) > 0.02;
+      var age = clock - ke * T, ph = active ? phaseOf(age) : "none";
+      var sc = active ? SC[ke % SC.length] : null, P = active ? plan(ke) : null, mix = active ? P0.mix[sc.tone] : null;
+      var bLo = Math.min(rb, rc, ro), bHi = Math.max(rb, rc, ro);
+      var gLo = Math.min(rc, ro), gHi = Math.max(rc, ro);
+      var colSettle = 99;
+      if (active && !P.unsure) {
+        for (var i = 0; i < P.probes.length; i++) { var pr = P.probes[i], t = pr.fire + Math.abs(ue - pr.at) * 0.55; if (t < colSettle) colSettle = t; }
+        colSettle = Math.min(colSettle, 4.6);
+      }
+      var x = c * cw;
+      for (var r = 1; r < rows; r++) {
         var g = null, col = null;
+        // soft shading below the observed line
         if (r > ro) {
-          var d = r - yo;
-          var idx = 6 - Math.floor(d / 2.2);
-          var sh = reduce ? 0 : Math.sin(time * 1.1 + c * 0.09 - r * 0.28) * 0.6;
-          idx = Math.max(0, Math.min(ramp.length - 1, Math.round(idx + sh)));
-          if (idx > 0) { g = ramp[idx]; col = faint; }
+          var base = 6 - Math.floor((r - ro) / 2.2);
+          if (base > 1) { var idx = base + (reduce ? 0 : Math.round(Math.sin(clock * 1.1 + c * 0.09 - r * 0.28) * 0.6)); if (idx > 0) { g = RAMP[Math.min(6, idx)]; col = P0.faint; } }
         }
-        if (c === evCol && r % 2 === 0) { g = "|"; col = muted; }
-        if (t >= EV && r > rc && r < lo) {
-          var tw = reduce ? 0.5 : (Math.sin(time * 2 + c * 0.35 + r * 0.6) + 1) / 2;
-          g = tw > 0.66 ? "+" : (tw > 0.33 ? ":" : "·"); col = acc;
+        // the contested region between the stories
+        if (active && ph !== "none" && r >= bLo && r <= bHi && (r < cLo || r > cHi)) {
+          var j = seeded(c * 13 + r * 29 + ke * 7);
+          if (ph === "detect") {
+            if (age > 0.6 && j < (age - 0.6) * 0.75) { g = FIELD[Math.floor(seeded(c * 31 + r * 7 + step) * 5)]; col = P0.muted; }
+          } else if (P.unsure) {
+            if (ph === "invest") { if (j < 0.5) { g = FIELD[Math.floor(seeded(c * 31 + r * 7 + step) * 5)]; col = P0.muted; } }
+            else { var m = Math.min(5, Math.floor((age - 5.0) / 0.16)); if (j < 0.45) { g = (seeded(c * 7 + r * 3 + step) < 0.5) ? "?" : "·"; col = mix[m]; } else if (r > ro) {} else g = null; }
+          } else {
+            var ts = colSettle + j * 0.35;
+            if (age < ts) { if (j < 0.5) { g = FIELD[Math.floor(seeded(c * 31 + r * 7 + step) * 5)]; col = P0.muted; } }
+            else {
+              var mm = Math.min(5, Math.floor((age - ts) / 0.14));
+              if (sc.gap === "+" && r > gLo && r < gHi) {
+                var tw = reduce ? 0.5 : (Math.sin(clock * 2 + c * 0.35 + r * 0.6) + 1) / 2;
+                g = tw > 0.66 ? "+" : (tw > 0.33 ? ":" : "·"); col = mix[mm];
+              } else if (r === rc && rc !== ro && (c & 1) === 0) { g = "-"; col = P0.muted; }
+              else if (age - ts < 0.55) { g = age - ts < 0.3 ? ":" : "·"; col = mix[Math.min(5, 2 + Math.floor((age - ts) / 0.1))]; }
+              else if (r <= ro) g = null;
+            }
+          }
         }
-        if (t >= EV && r === rc && c % 2 === 0) { g = "-"; col = muted; }
-        if (r >= lo && r <= hi) { g = "#"; col = fg; }
-        if (g) { ctx.fillStyle = col; ctx.fillText(g, x, y); }
+        // the observed line: one # per point, thin connectors on steep moves
+        if (r === ro) { g = "#"; col = P0.fg; }
+        else if (r > cLo && r < cHi) { g = "|"; col = P0.fg; }
+        if (g) { ctx.fillStyle = col; ctx.fillText(g, x, r * ch); }
       }
     }
-    ctx.fillStyle = muted;
-    ctx.fillText(W < 620 ? "launch" : "event: app release", evCol * cw + cw * 1.5, 2);
-    if (!reduce) requestAnimationFrame(frame);
+    // live cursor
+    ctx.fillStyle = P0.fg; ctx.fillText("█", (cols - 1) * cw, cRo[cols - 1] * ch);
+
+    // event markers (dashed) and only the newest label
+    var newest = -1, newestCol = -1;
+    for (var kk = k - 1; kk <= k; kk++) {
+      if (kk < 0) continue;
+      var ec = Math.floor((1 - (clock - kk * T) / TRAVEL) * cols);
+      if (ec <= 0 || ec >= cols) continue;
+      ctx.fillStyle = P0.muted;
+      for (var r2 = 2; r2 < cRo[ec] - 1; r2 += 2) ctx.fillText("┆", ec * cw, r2 * ch);
+      if (kk > newest) { newest = kk; newestCol = ec; }
+    }
+    if (newest >= 0) {
+      var sl = SC[newest % SC.length], lab = mobile ? sl.short : "event: " + sl.event;
+      var lw = ctx.measureText(lab).width, lx = newestCol * cw + cw * 1.5;
+      if (lx + lw > W) lx = newestCol * cw - lw - cw * 0.5;
+      ctx.fillStyle = P0.muted; ctx.fillText(lab, lx, ch + 1);
+    }
+
+    // query probes (desktop): a column of ':' drops onto the data, then leaves a tick
+    if (!mobile && !reduce) {
+      for (var kp = k - 1; kp <= k; kp++) {
+        if (kp < 0) continue;
+        var ag = clock - kp * T; if (ag < 1.2 || ag > T + 1) continue;
+        var Pp = plan(kp); if (Pp.unsure && ag > 5) continue;
+        var mixp = P0.mix[SC[kp % SC.length].tone];
+        for (var pi = 0; pi < Pp.probes.length; pi++) {
+          var pr2 = Pp.probes[pi]; if (ag < pr2.fire) continue;
+          var pc = Math.floor((1 - (clock - (kp * T + pr2.at)) / TRAVEL) * cols); if (pc < 0 || pc >= cols) continue;
+          var since = ag - pr2.fire, pro = cRo[pc];
+          if (since < 0.45) {
+            ctx.fillStyle = mixp[Math.max(1, 5 - Math.floor(since / 0.09))];
+            var depth = Math.min(pro - 1, 3 + Math.floor(since / 0.45 * pro));
+            for (var r3 = 3; r3 <= depth; r3++) ctx.fillText(":", pc * cw, r3 * ch);
+          } else { ctx.fillStyle = P0.muted; ctx.fillText("'", pc * cw, (pro - 1) * ch); }
+        }
+      }
+    }
+
+    // status line (row 0, always reserved)
+    var Pk = plan(k), sc0 = SC[k % SC.length];
+    var st = (Math.floor(clock * 2) % 2 === 0 ? "●" : "○") + (mobile ? " " : " live · ") + sc0.metric;
+    if (phase === "invest") {
+      var nq = Pk.probes.filter(function (p) { return u >= p.fire; }).length;
+      var left = Pk.unsure ? Pk.stories.length : Pk.stories.filter(function (x) { return x.tru || u < x.die; }).length;
+      st += mobile ? "   " + SPIN[Math.floor(clock * 8) % 4] + " " + nq + "/5" : "   " + SPIN[Math.floor(clock * 8) % 4] + " investigating · " + nq + "/5 queries · " + left + (left === 1 ? " story" : " stories") + " left";
+    } else if (phase === "verdict") st += "   ✓ graded";
+    ctx.fillStyle = P0.muted; ctx.fillText(st, 0, 1);
   }
-  resize();
-  window.addEventListener("resize", function () { resize(); if (reduce) frame(performance.now()); });
-  requestAnimationFrame(frame);
+
+  // clock and loop: 30 fps, paused off-screen or in a hidden tab, started after the font loads
+  var clock = 5.6, running = false, onscreen = true, fontsReady = false, lastTick = 0, lastDraw = 0, raf = 0;
+  function loop(now) {
+    raf = 0;
+    if (!running) return;
+    var dt = Math.min(100, now - lastTick); lastTick = now; clock += dt / 1000;
+    if (now - lastDraw >= FPS_MS - 2) { lastDraw = now; draw(clock); }
+    raf = requestAnimationFrame(loop);
+  }
+  function drawOnce() { if (fontsReady && W > 0) draw(reduce ? 7.0 : clock); }
+  function update() {
+    var should = fontsReady && onscreen && !document.hidden && !reduce;
+    if (should && !running) { running = true; lastTick = performance.now(); lastDraw = 0; if (!raf) raf = requestAnimationFrame(loop); }
+    else if (!should) running = false;
+  }
+  function fontsGo() {
+    if (fontsReady) return; fontsReady = true; resize();
+    if (reduce) { drawOnce(); [memoEl, metricEl, vEl].forEach(function (e) { e.classList.add("on"); }); }
+    update();
+  }
+  if (document.fonts && document.fonts.load) { document.fonts.load('12px "JetBrains Mono"').then(fontsGo, fontsGo); setTimeout(fontsGo, 1500); }
+  else fontsGo();
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { onscreen = es[0].isIntersecting; update(); }, { rootMargin: "100px" }).observe(cv);
+  }
+  document.addEventListener("visibilitychange", update);
+  var rzT = null;
+  window.addEventListener("resize", function () { clearTimeout(rzT); rzT = setTimeout(function () { if (fontsReady) { resize(); drawOnce(); } }, 120); });
+
+  /* ---------- investigation terminal ---------- */
+  var term = document.getElementById("term");
+  var LINES = [
+    ["c", "# memo: “Revenue fell 6% because of the price change.”"],
+    ["p", "SELECT week, sum(revenue) FROM orders GROUP BY 1 ORDER BY 1;"],
+    ["o", "  w31  412,880   w32  409,115   w33  386,420   ↓ 6.1%"],
+    ["p", "SELECT week, channel, count(*) FROM sessions GROUP BY 1, 2;"],
+    ["o", "  paid_social  +41%   organic  -3%   email  +1%"],
+    ["p", "SELECT channel, avg(order_value) FROM orders o JOIN sessions s USING (session_id) GROUP BY 1;"],
+    ["o", "  paid_social  31.2   organic  58.9   email  54.0"],
+    ["p", "SELECT price_band, count(*) FROM orders WHERE week >= 32 GROUP BY 1;"],
+    ["o", "  unchanged within cohorts  ·  conversion flat by channel"],
+    ["a", "answer.json → claim_1: refuted · cause: paid_mix_shift · share: 0.8 · confidence: 0.75"],
+    ["g", "graded → verdict ✓  share within tolerance ✓  evidence found in log ✓"]
+  ];
+  var termStarted = false, termVisible = true;
+  if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { termVisible = es[0].isIntersecting; }).observe(document.getElementById("termbox"));
+  function runTerm() {
+    if (termStarted) return; termStarted = true;
+    if (reduce) {
+      term.innerHTML = LINES.map(function (l) { return '<div class="tl-' + l[0] + '">' + pre(l) + esc(l[1]) + "</div>"; }).join("");
+      return;
+    }
+    var li = 0, ci = 0, cur = null;
+    function pre(l) { return l[0] === "p" ? '<span class="pr">agent$ </span>' : ""; }
+    function step() {
+      if (!termVisible || document.hidden) { setTimeout(step, 500); return; }
+      if (li >= LINES.length) {
+        setTimeout(function () { term.innerHTML = ""; li = 0; ci = 0; cur = null; step(); }, 6000);
+        return;
+      }
+      var l = LINES[li];
+      if (!cur) { cur = document.createElement("div"); cur.className = "tl-" + l[0]; term.appendChild(cur); }
+      var speed = l[0] === "p" ? 18 : 4;
+      ci = Math.min(l[1].length, ci + (l[0] === "p" ? 1 : 6));
+      cur.innerHTML = pre(l) + esc(l[1].slice(0, ci)) + (ci < l[1].length ? '<span class="caret"></span>' : "");
+      if (ci >= l[1].length) { li++; ci = 0; cur = null; setTimeout(step, l[0] === "o" ? 700 : 350); }
+      else setTimeout(step, speed);
+    }
+    step();
+  }
+  function pre(l) { return l[0] === "p" ? '<span class="pr">agent$ </span>' : ""; }
+  function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
 
   /* ---------- twin worlds svg ---------- */
   function drawTwin() {
@@ -491,7 +791,7 @@
   drawTwin();
   if (window.matchMedia) {
     var mq = window.matchMedia("(prefers-color-scheme: dark)");
-    if (mq.addEventListener) mq.addEventListener("change", drawTwin);
+    if (mq.addEventListener) mq.addEventListener("change", function () { drawTwin(); heroTheme(); });
   }
 
   /* ---------- reveal on scroll ---------- */
@@ -505,6 +805,7 @@
         if (e.isIntersecting) {
           e.target.classList.add("in");
           if (e.target.id === "payoff") fillBars();
+          if (e.target.id === "termbox") runTerm();
           io.unobserve(e.target);
         }
       });
@@ -513,6 +814,7 @@
   } else {
     els.forEach(function (el) { el.classList.add("in"); });
     fillBars();
+    runTerm();
   }
 })();
 </script>
