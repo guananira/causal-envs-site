@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>causal-envs</title>
+<title>causal-envs · Guananira</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230b0c0e'/%3E%3Cpath d='M12 26 L22 23 L30 27 L36 25' fill='none' stroke='%23eef0f2' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M36 25 L42 42 L52 44' fill='none' stroke='%23eef0f2' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M40 25 L54 25' fill='none' stroke='%237db4ff' stroke-width='5' stroke-linecap='round' stroke-dasharray='3 7'/%3E%3C/svg%3E">
 <meta name="description" content="RL environments for data-analysis agents. Simulated companies, known truth, rule-based grading.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,6 +70,7 @@
   }
   nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
   .brand { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: -0.01em; color: var(--fg); text-decoration: none; }
+  .brand .prod { color: var(--muted); font-weight: 400; }
   .links { display: flex; align-items: center; gap: 28px; }
   .links a { font-family: var(--mono); font-size: 12px; color: var(--muted); text-decoration: none; transition: color .2s; }
   .links a span { color: var(--faint); margin-right: 6px; }
@@ -251,7 +252,7 @@
 
 <nav>
   <div class="wrap">
-    <a class="brand" href="#">causal-envs</a>
+    <a class="brand" href="#">Guananira <span class="prod">/ causal-envs</span></a>
     <div class="links">
       <a href="#task"><span>01</span>Task</a>
       <a href="#grading"><span>02</span>Grading</a>
@@ -330,7 +331,7 @@
     <div class="duo">
       <div class="panel reveal">
         <h3>Twin worlds</h3>
-        <p class="cap">With and without each event. Decoys leave the same footprint and do nothing.</p>
+        <p class="cap">With and without each event. Decoys leave matched footprints in the data and have no effect.</p>
         <svg viewBox="0 0 560 280" id="twin" role="img" aria-label="Two worlds: with and without the event; a decoy event with no effect">
           <g id="twin-g"></g>
         </svg>
@@ -396,7 +397,7 @@
 </section>
 
 <footer>
-  <div class="wrap"><span>causal-envs</span><span>© 2026</span></div>
+  <div class="wrap"><span>causal-envs is a product of Guananira</span><span>© 2026 Guananira</span></div>
 </footer>
 
 <script>
@@ -437,7 +438,7 @@
       eff: ["none", 0], com: ["ramp", -0.16], noise: 0.004, gap: "" },
     { metric: "new signups", event: "campaign end", short: "campaign",
       claim: "“Signups fell because the campaign ended.”",
-      verdict: "Supported in part", detail: "about 45% of the drop", tone: "--accent",
+      verdict: "Supported", detail: "explains about 45% of the drop", tone: "--accent",
       eff: ["step", -0.08], com: ["ramp", -0.10], noise: 0.004, gap: "+" },
     { metric: "30-day retention", event: "onboarding test", short: "test",
       claim: "“The new onboarding lifted retention.”",
